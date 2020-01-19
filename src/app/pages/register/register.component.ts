@@ -3,52 +3,52 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '../../services/user.service';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService,
+    private userService: UserService,
     private toastr: ToastrService
   ) { }
-  loginForm: FormGroup;
+  registerForm: FormGroup;
   loading = false;
   submitted = false;
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  get fval() { return this.loginForm.controls; }
+  get fval() { return this.registerForm.controls; }
 
   onFormSubmit() {
     this.submitted = true;
 
-    if (this.loginForm.invalid) {
+    if (this.registerForm.invalid) {
       return;
     }
-
+    
     this.loading = true;
-    this.authenticationService.login(this.fval.username.value, this.fval.password.value).subscribe(
+    this.userService.register(this.registerForm.value).subscribe(
       (data) => {
-        this.router.navigate(['/timeline']);
+        alert('User Registered successfully!');
+        this.router.navigate(['/login']);
       },
       (error) => {
+
         this.toastr.error(error.error.message, 'Error');
         this.loading = false;
       }
     )
-
   }
-
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../models/post.model';
 
 @Component({
   selector: 'app-post-composer',
@@ -9,12 +11,20 @@ export class PostComposerComponent implements OnInit {
 
   newPostText: string;
 
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
   }
 
-  share(post_text: string) { 
-    console.log(post_text); 
+
+  onPost(text: string) {
+    var post: Post;
+    post = new Post();
+
+    post.text = text;
+    
+    this.postService.create(post).subscribe(data => {
+      console.log(data);
+    });
   }
 }

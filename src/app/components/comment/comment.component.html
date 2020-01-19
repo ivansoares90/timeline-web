@@ -1,8 +1,12 @@
 <article class="comment">
     <p><span class="author">{{comment.userId.username}}</span></p>
 
-    <p class="text-secondary"> {{comment.text}} <small><a href="#">Edit</a> | <a href="#">Delete</a></small> </p>
+    <ng-template [ngIf]="currentUser.id === comment.userId.id">
+        <p class="text-secondary"> {{comment.text}} <small><a [routerLink]="" (click)="onEdit()">Edit</a> | <a
+                    [routerLink]="" (click)="onDelete()">Delete</a></small> </p>
 
+
+    </ng-template>
     <p><small class="text-muted"> Last updated at <time>{{ comment.updatedAt }}</time></small></p>
     <hr />
 </article>

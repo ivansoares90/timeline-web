@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import { Post } from '../../models/post.model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
@@ -8,16 +9,24 @@ import { Post } from '../../models/post.model';
 })
 export class TimelineComponent implements OnInit {
 
-  constructor(private postService: PostService) { }
+  constructor(private authenticationService: AuthenticationService, private postService: PostService) { }
 
-  posts : Post[];
-  
+  posts: Post[];
+   public currentUser;
+  interval;
+
+
   ngOnInit() {
-    this.postService.list().subscribe(data => {
-      this.posts = data;
-    })
-
-    console.log(this.posts);
+    this.currentUser = this.authenticationService.currentUserValue();
+    var timer = setInterval(() => {
+      if (!localStorage.getItem('currentUser')) clearInterval(timer);
+      this.postService.list().subscribe(data => {
+        this.posts = data;
+      })
+    }, 500);
   }
 
+  trackByFn(index, item) {
+    return index;
+  }
 }
