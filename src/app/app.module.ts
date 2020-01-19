@@ -7,8 +7,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { TimelineComponent } from './pages/timeline/timeline.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { PostComponent } from './components/post/post.component';
-import { CommentListComponent } from './components/comment-list/comment-list.component';
-import { PostListComponent } from './components/post-list/post-list.component';
 import { PostComposerComponent } from './components/post-composer/post-composer.component';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -20,8 +18,7 @@ import { FormsModule } from '@angular/forms';
     TimelineComponent,
     CommentComponent,
     PostComponent,
-    CommentListComponent,
-    PostListComponent,
+
     PostComposerComponent
   ],
   imports: [
