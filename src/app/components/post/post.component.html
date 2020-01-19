@@ -1,23 +1,29 @@
-<article class="post container-fluid">
+<article class="post">
     <h6>{{post.userId.username}}</h6>
-    <p><small class="text-muted">Last updated at {{post.updatedAt}}</small></p>
-    <ng-template [ngIf]="currentUser.id === post.userId.id">
-        <p> <strong>{{post.text}} </strong><small><a [routerLink]="">Edit</a> | <a [routerLink]=""
-                    (click)="onDelete()">Delete</a></small></p>
+    <p><small class="text-muted">Last updated at <time>{{post.updatedAt | date}}</time> </small></p>
+    <p>
+        <ng-template [ngIf]="!editing" [ngIfElse]="edit">
+            <strong>{{post.text}} </strong>
+            <ng-template [ngIf]="currentUser.id === post.userId.id">
+                <small><a [routerLink]="" (click)="onClickEdit()">Edit</a> | <a [routerLink]=""
+                        (click)="onDelete()">Delete</a></small>
+            </ng-template>
+        </ng-template>
 
-    </ng-template>
-
+        <ng-template #edit>
+            <input type="text" class="form-control" value="{{post.text}}" name="edit_{{post.id}}" #edit
+                (keyup.enter)="onEdit(edit.value)" placeholder="Please edit your post." />
+        </ng-template>
+    </p>
     <hr />
 
-    <div *ngFor="let comment of post.comments">
-        <app-comment [comment]="comment"></app-comment>
-    </div>
-
-    <form action="">
-        <div class="form-group">
-            <label class="sr-only" for="message">post</label>
-            <input type="text" class="form-control" name="message_{{post.id}}" #message
-                (keyup.enter)="onComment(message.value)" placeholder="Please write your comment." />
+    <section>
+        <div *ngFor="let comment of post.comments;trackBy: trackByFn">
+            <app-comment [comment]="comment"></app-comment>
         </div>
-    </form>
+    </section>
+    <div class="form-group">
+        <input type="text" class="form-control" name="message_{{post.id}}" #message
+            (keyup.enter)="onComment(message.value)" placeholder="Please write your comment." />
+    </div>
 </article>

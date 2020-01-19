@@ -20,6 +20,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { UserService } from './services/user.service';
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { FooterComponent } from './components/footer/footer.component';
 
     NavComponent,
 
-    FooterComponent
+    FooterComponent,
+
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

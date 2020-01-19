@@ -1,12 +1,20 @@
 <article class="comment">
     <p><span class="author">{{comment.userId.username}}</span></p>
 
-    <ng-template [ngIf]="currentUser.id === comment.userId.id">
-        <p class="text-secondary"> {{comment.text}} <small><a [routerLink]="" (click)="onEdit()">Edit</a> | <a
-                    [routerLink]="" (click)="onDelete()">Delete</a></small> </p>
+    <ng-template [ngIf]="!editing" [ngIfElse]="edit">
+        <span class = "text-secondary">{{comment.text}} </span>
+        <ng-template [ngIf]="currentUser.id === comment.userId.id">
+            <small><a [routerLink]="" (click)="onClickEdit()">Edit</a> | <a [routerLink]=""
+                    (click)="onDelete()">Delete</a></small>
 
-
+        </ng-template>
     </ng-template>
-    <p><small class="text-muted"> Last updated at <time>{{ comment.updatedAt }}</time></small></p>
+
+    <ng-template #edit>
+        <input type="text" class="form-control" value="{{comment.text}}" name="edit_{{comment.id}}" #editInput
+            (keyup.enter)="onEdit(editInput.value)" placeholder="Please edit your comment." />
+    </ng-template>
+
+    <p><small class="text-muted"> Last updated at <time>{{comment.updatedAt | date}} </time></small></p>
     <hr />
 </article>

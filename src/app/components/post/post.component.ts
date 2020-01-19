@@ -15,15 +15,12 @@ export class PostComponent implements OnInit {
   @Input()
   post: Post;
   currentUser;
+  editing = false;
 
   constructor(private authenticationService: AuthenticationService, private postService: PostService, private commentService: CommentService) { }
 
   ngOnInit() {
-    console.log(this.post);
-
     this.currentUser = this.authenticationService.currentUserValue();
-
-    console.log(this.currentUser.id);
   }
 
   onComment(value: string) {
@@ -33,14 +30,28 @@ export class PostComponent implements OnInit {
     comment.postId = this.post.id;
 
     this.commentService.create(comment).subscribe(data => {
-      console.log(data);
+    //  console.log(data);
     });
-    console.log(this.post.id, value);
   }
 
   onDelete() {
     this.postService.delete(this.post.id).subscribe(data => {
-      console.log(data);
+    //  console.log(data);
     });
+  }
+  onClickEdit() {
+    this.editing = true;
+  }
+
+  onEdit(value: string) {
+    this.post.text = value;
+
+    this.postService.update(this.post).subscribe(data => {
+      this.editing = false;
+    });
+  }
+
+  trackByFn(index, item) {
+    return index;
   }
 }

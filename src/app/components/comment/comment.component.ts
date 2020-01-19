@@ -12,6 +12,7 @@ export class CommentComponent implements OnInit {
   @Input()
   comment: Comment;
   currentUser;
+  editing = false;
 
   constructor(private authenticationService: AuthenticationService, private commentService: CommentService) { }
 
@@ -26,13 +27,15 @@ export class CommentComponent implements OnInit {
     });
   }
 
-  onUpdate(text: string) {
-    var comment: Comment;
-    comment = new Comment();
+  onClickEdit() {
+    this.editing = true;
+  }
 
-    comment.text = text;
-    this.commentService.create(comment).subscribe(data => {
-      console.log(data);
+  onEdit(value: string) {
+    this.comment.text = value;
+
+    this.commentService.update(this.comment).subscribe(data => {
+      this.editing = false;
     });
   }
 }
