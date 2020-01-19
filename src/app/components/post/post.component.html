@@ -1,0 +1,19 @@
+<article class="post container-fluid">
+    <h6>{{post.userId.username}}</h6>
+    <p><small class="text-muted">Last updated at {{post.updatedAt}}</small></p>
+    <p> <strong>{{post.text}}</strong><small><a href="#">Edit</a> | <a href="#">Delete</a></small>
+    </p>
+
+    <hr />
+
+    <div *ngFor="let comment of post.comments">
+        <app-comment [comment]="comment"></app-comment>
+    </div>
+
+    <form action="">
+        <div class="form-group">
+            <label class="sr-only" for="message">post</label>
+            <textarea class="form-control" id="message" rows="1" placeholder="Please write your comment."></textarea>
+        </div>
+    </form>
+</article>

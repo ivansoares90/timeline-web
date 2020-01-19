@@ -1,0 +1,15 @@
+<div class="post-composer container-fluid">
+    <h3>Share a post</h3>
+
+    
+    <form>
+        <div class="form-group">
+            <label class="sr-only" for="newPostText">post</label>
+            <textarea required #newPostText  class="form-control" id="newPostText" name ="newPost" rows="3"
+                placeholder="Please write your post content."></textarea>
+        </div>
+        <div class="form-group">
+            <button class = "btn btn-primary btn-block" (click)="share(newPostText.value)">Share</button>
+        </div>
+    </form>
+</div>
